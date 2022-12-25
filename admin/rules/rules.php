@@ -164,64 +164,103 @@
 
             <div class="konten">
               <form id="form1" name="form1" method="post" action="./simpanrules.php" enctype="multipart/form-data">
-                <div>
-                  <h5 class="text-center">Tambah Rule Penyakit Lumpuh Bebek</h5>
-                  <table class="tab" width="650" border="0" align="center" cellpadding="4" cellspacing="1" bordercolor="#F0F0F0" bgcolor="#FFFFFF">
-                    <tr bgcolor="#FFFFFF">
-                      <td><strong class="ms-2">Pilih Gejala</strong></td>
-                      <!-- <td>&nbsp;</td> -->
-                    </tr>
-                    <tr bgcolor="#FFFFFF">
-                      <td colspan="2">
-                        <ul style="list-style:none;"> <?php
-                                                      include "../koneksi.php";
-                                                      $arrPenyakit = array();
-                                                      $arrGejala = array();
-                                                      $query = mysqli_query($koneksi, "SELECT * FROM tb_gejala ORDER BY id") or die("Query Error..!" . mysqli_error($koneksi));
-                                                      while ($row = mysqli_fetch_array($query)) {
-                                                        $arrGejala["$row[id]"] = $row['kdgejala'] . "," . $row['gejala'];
-                                                      ?>
-                            <li><input class="cekbok" type="checkbox" name="gejala[]" id="gejala" value="<?php echo $row['id']; ?>">&nbsp;
-                              <?php echo $row['kdgejala'] . "<strong>&nbsp;|&nbsp;</strong>" . $row['gejala']; ?>
-                              <span class="check"></span>
-                            </li>
-                          <?php } ?>
-                        </ul><strong>&nbsp;&nbsp;Pilih Penyakit
-                          <select name="daftarpenyakit" id="daftarpenyakit">
-                            <option value="NULL">Daftar Penyakit</option>
-                            <?php
-                            $sqlp = "SELECT * FROM tb_penyakit ORDER BY id";
-                            $qryp = mysqli_query($koneksi, $sqlp)
-                              or die("SQL Error: " . mysqli_error($koneksi));
-                            while ($datap = mysqli_fetch_array($qryp)) {
-                              if ($datap['id'] == $kdsakit) {
-                                $cek = "selected";
-                              } else {
-                                $cek = "";
-                              }
-                              $arrPenyakit["$datap[id]"] = $datap['nama_penyakit'];
-                              echo "<option value='$datap[id]' $cek>$datap[id]&nbsp;|&nbsp;$datap[nama_penyakit]</option>";
+                <h5 class="text-center">Tambah Rule Penyakit Lumpuh Bebek</h5>
+                <table class="tab" width="650" border="0" align="center" cellpadding="4" cellspacing="1" bordercolor="#F0F0F0" bgcolor="#FFFFFF">
+                  <tr bgcolor="#FFFFFF">
+                    <td><strong class="ms-2">Pilih Gejala</strong></td>
+                    <!-- <td>&nbsp;</td> -->
+                  </tr>
+                  <tr bgcolor="#FFFFFF">
+                    <td colspan="2">
+                      <ul style="list-style:none;"> <?php
+                                                    include "../koneksi.php";
+                                                    $arrPenyakit = array();
+                                                    $arrGejala = array();
+                                                    $query = mysqli_query($koneksi, "SELECT * FROM tb_gejala ORDER BY id") or die("Query Error..!" . mysqli_error($koneksi));
+                                                    while ($row = mysqli_fetch_array($query)) {
+                                                      $arrGejala["$row[id]"] = $row['kdgejala'] . "," . $row['gejala'];
+                                                    ?>
+                          <li><input class="cekbok" type="checkbox" name="gejala[]" id="gejala" value="<?php echo $row['id']; ?>">&nbsp;
+                            <?php echo $row['kdgejala'] . "<strong>&nbsp;|&nbsp;</strong>" . $row['gejala']; ?>
+                            <span class="check"></span>
+                          </li>
+                        <?php } ?>
+                      </ul><strong>&nbsp;&nbsp;Pilih Penyakit
+                        <select name="daftarpenyakit" id="daftarpenyakit">
+                          <option value="NULL">Daftar Penyakit</option>
+                          <?php
+                          $sqlp = "SELECT * FROM tb_penyakit ORDER BY id";
+                          $qryp = mysqli_query($koneksi, $sqlp)
+                            or die("SQL Error: " . mysqli_error($koneksi));
+                          while ($datap = mysqli_fetch_array($qryp)) {
+                            if ($datap['id'] == $kdsakit) {
+                              $cek = "selected";
+                            } else {
+                              $cek = "";
                             }
-                            ?>
-                          </select><br><br>&nbsp;&nbsp;Nilai Belief
-                          <!-- <p class="ms-2
+                            $arrPenyakit["$datap[id]"] = $datap['nama_penyakit'];
+                            echo "<option value='$datap[id]' $cek>$datap[id]&nbsp;|&nbsp;$datap[nama_penyakit]</option>";
+                          }
+                          ?>
+                        </select><br><br>&nbsp;&nbsp;Nilai Belief
+                        <!-- <p class="ms-2
                           ">Nilai Belief</p> -->
-                          <input type="text" name="belief" size="5" class="ms-4">
-                        </strong>
-                      </td>
-                      <!-- CF<input type="text" name="cf" size="5"></strong></td> -->
-                    </tr>
-                    <tr bgcolor="#FFFFFF">
-                      <td>&nbsp;</td>
-                      <td><input class="setrule" type="submit" name="Submit" value="Set Rule" />
-                        <input class="reset" type="reset" name="Submit2" value="Reset" />
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                        <input type="text" name="belief" size="5" class="ms-4">
+                      </strong>
+                    </td>
+                    <!-- CF<input type="text" name="cf" size="5"></strong></td> -->
+                  </tr>
+                  <tr bgcolor="#FFFFFF">
+                    <td>&nbsp;</td>
+                    <td><input class="setrule" type="submit" name="Submit" value="Set Rule" />
+                      <input class="reset" type="reset" name="Submit2" value="Reset" />
+                    </td>
+                  </tr>
+                </table>
               </form>
             </div>
-
+            <table class="table table-striped table-hover table-bordered mt-4">
+              <thead>
+                <tr>
+                  <th><strong>No</strong></th>
+                  <th><strong>KD Gejala | Nama Gejala</strong><span style="float:right; margin-right:25px;"><strong></strong></span></th>
+                  <?php
+                  include "../koneksi.php";
+                  $query_p = mysqli_query($koneksi, "SELECT id_penyakit FROM tb_rules GROUP BY id_penyakit");
+                  while ($data_p = mysqli_fetch_array($query_p)) {
+                  ?>
+                    <th><?php $idp = $data_p['id_penyakit'];
+                        echo "$idp | ";
+                        print_r($arrPenyakit["$idp"]); ?><br><a href="./editrules.php?kdpenyakit=<?php echo $data_p['id_penyakit']; ?>">Edit Rule</a></th><?php } ?>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $query = mysqli_query($koneksi, "SELECT * FROM tb_rules GROUP BY id_gejala ORDER BY id_gejala ASC ") or die(mysqli_error($koneksi));
+                $no = 0;
+                while ($row = mysqli_fetch_array($query)) {
+                  $idpenyakit = $row['id_penyakit'];
+                  $no++;
+                ?>
+                  <tr>
+                    <td valign="top" class="text-center"><?php echo $row['id_gejala']; ?></td>
+                    <td><?php $idG = $row['id_gejala'];
+                        print_r($arrGejala["$idG"]);
+                        ?></td><?php $query_pb = mysqli_query($koneksi, "SELECT id_penyakit FROM tb_rules GROUP BY id_penyakit ");
+                                while ($data_pb = mysqli_fetch_array($query_pb)) {
+                                ?>
+                      <td><?php $kdpenyakit_B = $data_pb['id_penyakit'];
+                                  $kdgejala_B = $row['id_gejala'];
+                                  $query_CG = mysqli_query($koneksi, "SELECT * FROM tb_rules WHERE id_penyakit='$kdpenyakit_B' AND id_gejala='$kdgejala_B' ");
+                                  while ($data_GB = mysqli_fetch_array($query_CG)) {
+                                    // echo "<center>&#8730;</center>";
+                                    echo "<center><strong><a title='Edit Nilai Belief Pada Tiap Gejala' href='./editbelief.php?id_penyakit=$kdpenyakit_B&id_gejala=$kdgejala_B&belief=$data_GB[belief]'>$data_GB[belief]</a></strong></center>";
+                                  }
+                          ?></td><?php } ?>
+                  </tr>
+                <?php } ?>
+              </tbody>
+            </table>
 
           </div>
         </div>

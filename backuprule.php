@@ -69,6 +69,45 @@
       </div>
     </form>
   </div>
+
+  <table class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th><strong>No</strong></th>
+        <th><strong>KD Gejala | Nama Gejala</strong><span style="float:right; margin-right:25px;"><strong></strong></span></th>
+        <?php $query_p = mysqli_query($koneksi, "SELECT id_penyakit FROM tb_rules GROUP BY id_penyakit");
+        while ($data_p = mysqli_fetch_array($query_p)) {
+        ?>
+          <th><?php $idp = $data_p['id_penyakit'];
+              echo "$idp | ";
+              print_r($arrPenyakit["$idp"]); ?><br><a href="edit_rule_base.php?kdpenyakit=<?php echo $data_p['id_problem']; ?>">Edit Rule</a></th><?php } ?>
+      </tr>
+    </thead>
+    <?php
+    $query = mysqli_query($koneksi, "SELECT * FROM tb_rules GROUP BY id_evidence ORDER BY id_evidence ASC ") or die(mysqli_error($koneksi));
+    $no = 0;
+    while ($row = mysqli_fetch_array($query)) {
+      $idpenyakit = $row['id_problem'];
+      $no++;
+    ?>
+      <tr>
+        <td valign="top"><?php echo $row['id_evidence']; ?></td>
+        <td><?php $idG = $row['id_evidence'];
+            print_r($arrGejala["$idG"]); // echo $row['gejala'];
+            ?></td><?php $query_pb = mysqli_query($koneksi, "SELECT id_problem FROM tb_rules GROUP BY id_problem ");
+                    while ($data_pb = mysqli_fetch_array($query_pb)) {
+                    ?>
+          <td><?php $kdpenyakit_B = $data_pb['id_problem'];
+                      $kdgejala_B = $row['id_evidence'];
+                      $query_CG = mysqli_query($koneksi, "SELECT * FROM tb_rules WHERE id_problem='$kdpenyakit_B' AND id_evidence='$kdgejala_B' ");
+                      while ($data_GB = mysqli_fetch_array($query_CG)) {
+                        echo "<center>&#8730;</center>";
+                        echo "<center><strong><a title='Edit Nilai CF Pada Tiap Gejala' href='edit_cf.php?id_problem=$kdpenyakit_B&id_evidence=$kdgejala_B&cf=$data_GB[cf]'>cf=$data_GB[cf]</a></strong></center>";
+                      }
+              ?></td><?php } ?>
+      </tr>
+    <?php } ?>
+  </table>
   <!-- Akhir tampilan tambah rule -->
 
   <!-- Awal tampilan tabel data rule -->
