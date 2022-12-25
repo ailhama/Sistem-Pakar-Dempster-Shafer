@@ -203,12 +203,9 @@
                           }
                           ?>
                         </select><br><br>&nbsp;&nbsp;Nilai Belief
-                        <!-- <p class="ms-2
-                          ">Nilai Belief</p> -->
                         <input type="text" name="belief" size="5" class="ms-4">
                       </strong>
                     </td>
-                    <!-- CF<input type="text" name="cf" size="5"></strong></td> -->
                   </tr>
                   <tr bgcolor="#FFFFFF">
                     <td>&nbsp;</td>
@@ -222,16 +219,16 @@
             <table class="table table-striped table-hover table-bordered mt-4">
               <thead>
                 <tr>
-                  <th><strong>No</strong></th>
-                  <th><strong>KD Gejala | Nama Gejala</strong><span style="float:right; margin-right:25px;"><strong></strong></span></th>
+                  <th>No</th>
+                  <th class="text-center">KD Gejala | Nama Gejala</th>
                   <?php
                   include "../koneksi.php";
                   $query_p = mysqli_query($koneksi, "SELECT id_penyakit FROM tb_rules GROUP BY id_penyakit");
                   while ($data_p = mysqli_fetch_array($query_p)) {
                   ?>
-                    <th><?php $idp = $data_p['id_penyakit'];
-                        echo "$idp | ";
-                        print_r($arrPenyakit["$idp"]); ?><br><a href="./editrules.php?kdpenyakit=<?php echo $data_p['id_penyakit']; ?>">Edit Rule</a></th><?php } ?>
+                    <th class="text-center"><?php $idp = $data_p['id_penyakit'];
+                                            echo "$idp | ";
+                                            print_r($arrPenyakit["$idp"]); ?><br><a href="./editrules.php?kdpenyakit=<?php echo $data_p['id_penyakit']; ?>">Edit Rule</a></th><?php } ?>
                 </tr>
               </thead>
               <tbody>

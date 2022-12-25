@@ -19,7 +19,6 @@
 
   <!-- Vendor CSS Files -->
   <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
   <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="../../assets/vendor/quill/quill.snow.css" rel="stylesheet">
@@ -87,7 +86,6 @@
                   <th class="text-center">Nama Gejala</th>
                   <th width='10px' class="text-center">Belief</th>
                   <th width='250px' class="text-center">Update</th>
-                  <!-- <th colspan="2" class="text-center">Update</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -103,7 +101,6 @@
                     <td class="text-center"><input class="submit" type="submit" value="Update Nilai">
                       <a href="./rules.php" class="ms-2 batal">Batal</a>
                     </td>
-                    <!-- <td><a href="./rules.php" class="batal">Batal</a></td> -->
                   </tr>
                 <?php } ?>
               </tbody>
