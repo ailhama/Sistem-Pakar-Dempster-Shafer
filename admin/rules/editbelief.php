@@ -75,14 +75,14 @@
         $kdpenyakit = $_GET['id_penyakit'];
         $queryP = mysqli_query($koneksi, "SELECT * FROM tb_penyakit WHERE id='$kdpenyakit' ");
         $dataP = mysqli_fetch_array($queryP);
-        echo "Nama Penyakit = " . $dataP['kdpenyakit'] . " | " . $dataP['nama_penyakit'];
-        ?>
+        echo "<b>Nama Penyakit = " . $dataP['kdpenyakit'] . " | " . $dataP['nama_penyakit'];
+        ?></b>
         <form id="form1" name="form1" method="post" action="./updatebelief.php?id_penyakit=<?php echo $_GET['id_penyakit']; ?>&id_gejala=<?php echo $_GET['id_gejala']; ?>" enctype="multipart/form-data">
           <div class="table-responsive">
             <table class="table table-striped table-bordered mt-2">
               <thead>
                 <tr>
-                  <th class="text-center">Kode Gejala</th>
+                  <th width='116px' class="text-center">Kode Gejala</th>
                   <th class="text-center">Nama Gejala</th>
                   <th width='10px' class="text-center">Belief</th>
                   <th width='250px' class="text-center">Update</th>
