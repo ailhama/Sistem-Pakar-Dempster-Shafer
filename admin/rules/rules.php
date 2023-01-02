@@ -68,8 +68,35 @@
       width: 18px;
       height: 18px;
     }
+
+    .back-to-top {
+      display: block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      /* tambahkan ini untuk membuat bentuk bulat */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      /* tambahkan ini untuk menambahkan shadow */
+      text-align: center;
+      line-height: 40px;
+    }
+
+    .back-to-top i {
+      font-size: 20px;
+      color: #fff;
+    }
   </style>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.back-to-top').click(function() {
+        $('html, body').animate({
+          scrollTop: 0
+        }, 'slow');
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -163,7 +190,7 @@
           <div class="table-responsive">
 
             <div class="konten">
-              <form id="form1" name="form1" method="post" action="./simpanrules.php" enctype="multipart/form-data">
+              <form id="form1" name="form1" method="post" action="./simpanrules.php" enctype="multipart/form-data" onsubmit="return validateForm()">
                 <h5 class="text-center">Tambah Rule Penyakit Lumpuh Bebek</h5>
                 <table class="tab" width="700" border="0" align="center" cellpadding="4" cellspacing="1" bordercolor="#F0F0F0" bgcolor="#fff">
                   <tr bgcolor="#FFFFFF">
@@ -181,12 +208,18 @@
                         while ($row = mysqli_fetch_array($query)) {
                           $arrGejala["$row[id]"] = $row['kdgejala'] . "," . $row['gejala'];
                         ?>
-                          <li><input class="cekbok" type="checkbox" name="gejala[]" id="gejala" value="<?php echo $row['id']; ?>">&nbsp;
-                            <?php echo $row['kdgejala'] . "<strong>&nbsp;|&nbsp;</strong>" . $row['gejala']; ?>
-                            <span class="check"></span>
+                          <!-- element label dengan attribute for sama dengan id element checkbox -->
+                          <li style="margin: 5px 0;">
+                            <label for="gejala<?php echo $row['id']; ?>" style="cursor: pointer;">
+                              <!-- element checkbox dengan attribute id sama dengan for element label -->
+                              <input class="cekbok" type="checkbox" id="gejala<?php echo $row['id']; ?>" name="gejala[]" value="<?php echo $row['id']; ?>">
+                              &ensp; <?php echo $row['kdgejala'] . "<strong>&nbsp;|&nbsp;</strong>" . $row['gejala']; ?>
+                              <span class="check"></span>
+                            </label>
                           </li>
                         <?php } ?>
-                      </ul><strong>&nbsp;&nbsp;Pilih Penyakit
+                      </ul>
+                      <strong>&nbsp;&nbsp;Pilih Penyakit
                         <select name="daftarpenyakit" id="daftarpenyakit">
                           <option value="NULL">Daftar Penyakit</option>
                           <?php
@@ -246,19 +279,22 @@
                 ?>
                   <tr>
                     <td valign="top" class="text-center"><?php echo $row['id_gejala']; ?></td>
-                    <td><?php $idG = $row['id_gejala'];
-                        print_r($arrGejala["$idG"]);
-                        ?></td><?php $query_pb = mysqli_query($koneksi, "SELECT id_penyakit FROM tb_rules GROUP BY id_penyakit ");
-                                while ($data_pb = mysqli_fetch_array($query_pb)) {
-                                ?>
-                      <td><?php $kdpenyakit_B = $data_pb['id_penyakit'];
-                                  $kdgejala_B = $row['id_gejala'];
-                                  $query_CG = mysqli_query($koneksi, "SELECT * FROM tb_rules WHERE id_penyakit='$kdpenyakit_B' AND id_gejala='$kdgejala_B' ");
-                                  while ($data_GB = mysqli_fetch_array($query_CG)) {
-                                    // echo "<center>&#8730;</center>";
-                                    echo "<center><strong><a title='Edit Nilai Belief' href='./editbelief.php?id_penyakit=$kdpenyakit_B&id_gejala=$kdgejala_B&belief=$data_GB[belief]'>$data_GB[belief]</a></strong></center>";
-                                  }
-                          ?></td><?php } ?>
+                    <td>
+                      <?php $idG = $row['id_gejala'];
+                      print_r($arrGejala["$idG"]);
+                      ?></td>
+                    <?php $query_pb = mysqli_query($koneksi, "SELECT id_penyakit FROM tb_rules GROUP BY id_penyakit ");
+                    while ($data_pb = mysqli_fetch_array($query_pb)) {
+                    ?>
+                      <td>
+                        <?php
+                        $kdpenyakit_B = $data_pb['id_penyakit'];
+                        $kdgejala_B = $row['id_gejala'];
+                        $query_CG = mysqli_query($koneksi, "SELECT * FROM tb_rules WHERE id_penyakit='$kdpenyakit_B' AND id_gejala='$kdgejala_B' ");
+                        while ($data_GB = mysqli_fetch_array($query_CG)) {
+                          echo "<center><strong><a title='Edit Nilai Belief' href='./editbelief.php?id_penyakit=$kdpenyakit_B&id_gejala=$kdgejala_B&belief=$data_GB[belief]'>$data_GB[belief]</a></strong></center>";
+                        }
+                        ?></td><?php } ?>
                   </tr>
                 <?php } ?>
               </tbody>
@@ -288,6 +324,27 @@
   </div><!-- End Logout Modal-->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <script>
+    function validateForm() {
+      // Ambil semua checkbox yang memiliki nama "gejala[]"
+      var checkboxes = document.getElementsByName("gejala[]");
+      // Inisialisasi counter untuk menghitung jumlah checkbox yang tercentang
+      var count = 0;
+      // Iterasi setiap checkbox
+      for (var i = 0; i < checkboxes.length; i++) {
+        // Jika checkbox tercentang, tambah counter
+        if (checkboxes[i].checked) count++;
+      }
+      // Jika tidak ada checkbox yang tercentang, tampilkan pesan error
+      if (count == 0) {
+        alert("Anda harus memilih minimal 1 gejala!");
+        return false;
+      }
+      // Jika validasi berhasil, submit form
+      return true;
+    }
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>

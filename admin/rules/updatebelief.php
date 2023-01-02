@@ -62,8 +62,9 @@
   $berhasil = mysqli_query($koneksi, $perintah) or die(" Data tidak masuk database / data telah ada " . mysqli_error($koneksi));
   if ($berhasil) {
     echo "<br><br><br>";
-    echo "<center class:'berhasil'><b>Data Berhasil Diubah</b></center>";
-    echo "<center><a class:'ok' href='./rules.php'>OK</a></center>";
+    echo "<center><b>Data Nilai Belief Berhasil Diubah</b></center>";
+    echo "<br>";
+    echo "<center><a class='ok' href='./rules.php'>OK</a></center>";
   } else {
     echo "<center><font color='#ff0000'><strong>Penyimpanan Gagal</strong></font></center><br>";
     echo "<center><a href='./rules.php'>Kembali</a></center>";

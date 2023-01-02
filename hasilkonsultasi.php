@@ -69,14 +69,8 @@ session_start();
     }
     ?>
     <?php
-    //------------------------------------------------- Mengambil Nilai Belief Gejala Yang dipilih
-    if (isset($_POST['bukti'])) {
-      if (count($_POST['bukti']) < 2) {
-        // echo "<script> alert ('Pilih minimal 2 gejala') </script>";
-        echo "<p class=\"gejala\">Mohon maaf anda harus pilih minimal 2 gejala</p>";
-      } elseif (count($_POST['bukti']) <= 0) {
-        echo "<p class=\"gejala\">Mohon maaf anda harus pilih gejala terlebih dahulu</p>";
-      } else {
+    //Mengambil Nilai Belief Gejala Yang dipilih
+    if (isset($_POST['bukti'])) { {
         echo "<div class='form'><p><b>Gejala Yang dipilih :</b></p>";
         $gejaladipilih = $_POST['bukti'];
         foreach ($gejaladipilih as $gjlplh) {

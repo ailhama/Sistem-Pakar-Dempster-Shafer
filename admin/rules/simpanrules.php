@@ -76,8 +76,9 @@
       $no++;
     }
     echo "<br><br><br>";
-    echo "<center class:'berhasil'><strong>Data Rule berhasil di tambahkan</strong></center>";
-    echo "<center><a class:'ok' href='./rules.php'>OK</a></center>";
+    echo "<center><strong>Data Rule berhasil di tambahkan</strong></center>";
+    echo "<br>";
+    echo "<center><a class='ok' href='./rules.php'>OK</a></center>";
     ?>
   </div>
 

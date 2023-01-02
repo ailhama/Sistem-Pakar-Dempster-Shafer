@@ -66,6 +66,8 @@
       cursor: pointer;
       width: 18px;
       height: 18px;
+      margin-right: 10px;
+      margin-top: 5px;
     }
   </style>
 
@@ -97,11 +99,12 @@
                   } else {
                     $checked = [];
                   }
-                  //#end data gejala
-                ?>
-                  <li><input class="cekbok" type="checkbox" name="gejala[]" id="gejala" value="<?php echo $row['id']; ?>" <?php in_array($row['id'], $checked) ? print "checked" : "";  ?>>
-                    <?php echo $row['kdgejala'] . "<strong>&nbsp; |&nbsp;&nbsp;</strong>" . $row['gejala']; ?></li>
-                <?php } ?>
+                  //end data gejala
+                  echo '<li>';
+                  echo '<input class="cekbok" type="checkbox" name="gejala[]" id="gejala' . $row['id'] . '" value="' . $row['id'] . '" ' . (in_array($row['id'], $checked) ? 'checked' : '') . '>';
+                  echo '<label style="cursor: pointer;" for="gejala' . $row['id'] . '">' . $row['kdgejala'] . '<strong>&nbsp; |&nbsp;&nbsp;</strong>' . $row['gejala'] . '</label>';
+                  echo '</li>';
+                } ?>
               </ul>
 
               <strong>

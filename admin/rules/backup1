@@ -1,0 +1,43 @@
+<?php
+if (isset($_POST['gejala'])) {
+  $seleksi   = htmlentities(implode(',', $_POST['gejala']));
+}
+$data = $seleksi;
+
+$barisinputan = $data;
+$barisinputan = explode(",", $barisinputan);
+
+for ($mulai = 0; $mulai < count($barisinputan); $mulai++) {
+  $inputan = $barisinputan[$mulai];
+
+  // cek apakah data gejala terkait telah diubah atau tidak
+  $query = "SELECT * FROM tb_rules WHERE id_penyakit='$kd_penyakit' AND id_gejala='$inputan'";
+  $result = mysqli_query($koneksi, $query);
+  $row = mysqli_fetch_array($result);
+
+  // jika data gejala terkait telah diubah, ubah nilai belief sesuai dengan data yang diinginkan
+  if (!$row) {
+    $sql = "INSERT INTO tb_rules (id_penyakit,id_gejala,belief) VALUES ('$kd_penyakit','$inputan','0')";
+    $query = mysqli_query($koneksi, $sql) or die(mysqli_error($koneksi));
+  }
+}
+
+
+// $gejala   = '';
+if (isset($_POST['gejala'])) {
+  $seleksi   = htmlentities(implode(',', $_POST['gejala']));
+}
+$data = $seleksi;
+// $input = $data;
+//menampilkan outputnya
+//menyimpan data kedalam tabel relasi
+// $barisinputan = $data;
+$barisinputan = $data;
+$barisinputan = explode(",", $barisinputan);
+$no = 0;
+for ($mulai = 0; $mulai < count($barisinputan); $mulai++) {
+  $inputan = $barisinputan[$mulai];
+  $sql = "INSERT INTO  tb_rules (id_penyakit,id_gejala,belief) VALUES ('$kd_penyakit','$inputan','0')";
+  $query = mysqli_query($koneksi, $sql) or die(mysqli_error($koneksi));
+  $no++;
+}

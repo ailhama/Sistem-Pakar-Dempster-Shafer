@@ -51,8 +51,6 @@
 
   <section>
     <div class="card mt-4 col-md-7 mx-auto">
-      <!-- <div class="card-header bg-light">
-        </div> -->
       <div class="mt-4">
         <a href="./index.php" type="button" class="btn btn-outline-danger btn-sm ms-3"><i class="bi bi-box-arrow-left"></i> Kembali</a>
       </div>
@@ -77,29 +75,44 @@
           $sqli = "SELECT * FROM tb_gejala";
           // $result = mysqli_query($koneksi, $sqli);
           $result = $koneksi->query($sqli);
+          if (isset($_POST['bukti'])) {
+            if (count($_POST['bukti']) < 2) {
+              echo "<p class=\"gejala\">Mohon maaf anda harus pilih minimal 2 gejala</p>";
+            } elseif (count($_POST['bukti']) <= 0) {
+              echo "<p class=\"gejala\">Anda harus memilih gejala terlebih dahulu</p>";
+            }
+          }
+
           // mengambil baris berikutnya menjadi objek
           while ($row = $result->fetch_object()) {
             echo "<hr> ";
-            echo "<input style='cursor: pointer; width:20px;height:20px;' type='checkbox' name='bukti[]' value='{$row->id}'"
-              . (isset($_POST['bukti']) ? (in_array($row->id, $_POST['bukti']) ? " checked" : "") : "")
-              . ">&ensp; {$row->id}. {$row->gejala}<br>";
+            echo "<label for='checkbox" . $row->id . "' style='cursor: pointer;'>";
+            echo "<input style='cursor: pointer; width:20px;height:20px;' type='checkbox' id='checkbox" . $row->id . "' name='bukti[]' value='" . $row->id . "'";
+            if (isset($_POST['bukti'])) {
+              echo (in_array($row->id, $_POST['bukti']) ? " checked" : "");
+            }
+            echo ">&ensp; " . $row->id . ". " . $row->gejala . "</label><br>";
           }
           ?>
           <div class="mt-4">
-            <button class="btn btn-outline-success btn-md" onclick="return confirm('Apakah jawaban sudah sesuai dengan gejala yang dialami ?');" style="width: 130px; height: 40px; cursor: pointer; box-shadow: 0 0 10px rgb(255, 250, 240);"><i class="bi bi-check-lg"></i> Diagnosa</button>
+            <button class="btn btn-outline-success btn-md" onclick="return validateForm();" style="width: 130px; height: 40px; cursor: pointer; box-shadow: 0 0 10px rgb(255, 250, 240);"><i class="bi bi-check-lg"></i> Diagnosa</button>
           </div>
-
         </form>
-        <?php
-        //-- Mengambil Nilai Belief Gejala Yang dipilih
-        if (isset($_POST['bukti'])) {
-          if (count($_POST['bukti']) < 2) {
-            echo "<p class=\"gejala\">Mohon maaf anda harus pilih minimal 2 gejala</p>";
-          } elseif (count($_POST['bukti']) <= 0) {
-            echo "<p class=\"gejala\">Mohon maaf anda harus pilih gejala terlebih dahulu</p>";
+        <script>
+          function validateForm() {
+            var boxes = document.getElementsByName("bukti[]");
+            var checkboxesChecked = 0;
+            for (var i = 0; i < boxes.length; i++) {
+              if (boxes[i].checked) {
+                checkboxesChecked++;
+              }
+            }
+            if (checkboxesChecked < 2) {
+              alert("Maaf, Anda harus memilih minimal 2 gejala");
+              return false;
+            }
           }
-        }
-        ?>
+        </script>
       </div>
     </div>
   </section>
